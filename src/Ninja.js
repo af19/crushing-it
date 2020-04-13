@@ -19,7 +19,7 @@ class Ninja extends React.Component {
     this.removeAllVotes();
     
     // open voting
-    var startVoteRef = fbRef.database().ref('/_voteSession/');
+    let startVoteRef = fbRef.database().ref('/_voteSession/');
     startVoteRef.set({
       isOpen: true,
       startTime: fbRef.database.ServerValue.TIMESTAMP
@@ -42,7 +42,7 @@ class Ninja extends React.Component {
   }
   
   removeAllVotes() {
-    var fbObj = fbRef.database().ref();
+    let fbObj = fbRef.database().ref();
     fbObj.once('value', snapshot => {
 
       snapshot.forEach((childSnapshot) => {
@@ -59,7 +59,7 @@ class Ninja extends React.Component {
   }
 
   writeUserData(userName, userID) {
-    var newChildRef = fbRef.database().ref(userID + '/votes/').push();
+    let newChildRef = fbRef.database().ref(userID + '/votes/').push();
     newChildRef.set({
       plus_one: true
     });
@@ -76,7 +76,7 @@ class Ninja extends React.Component {
     window.addEventListener('scroll', this.handleScroll);
     document.documentElement.classList.add("vote");
     document.body.classList.add("vote");
-    var startVoteRef = fbRef.database().ref('/_voteSession');
+    let startVoteRef = fbRef.database().ref('/_voteSession');
     startVoteRef.on('value', snapshot => {
       this.setState({startVoting: snapshot.val().isOpen});
 
@@ -88,12 +88,12 @@ class Ninja extends React.Component {
       }
     });
 
-    var namesRef = fbRef.database().ref('/_lineup').orderByChild('name');
+    let namesRef = fbRef.database().ref('/_lineup').orderByChild('name');
     namesRef.once('value', snapshot => {
 
       snapshot.forEach((childSnapshot) => {
-        var childKey = childSnapshot.key;
-        var childData = childSnapshot.val();
+        let childKey = childSnapshot.key;
+        let childData = childSnapshot.val();
 
         this.setState(prevState => ({
           data: [...prevState.data, {id: childKey, name: childData.name}]
@@ -103,12 +103,12 @@ class Ninja extends React.Component {
   }
   
   handleScroll() {
-    var elements = document.getElementsByClassName('vote-name');
+    let elements = document.getElementsByClassName('vote-name');
     for (var i = 0; i < elements.length; i++) {
-      var requiredElement = elements[i];
-      var rect = requiredElement.getBoundingClientRect();
-      var elemTop = rect.top;
-      var isVisible = (elemTop - 50 >= 0);
+      let requiredElement = elements[i];
+      let rect = requiredElement.getBoundingClientRect();
+      let elemTop = rect.top;
+      let isVisible = (elemTop - 50 >= 0);
       if (!isVisible) {
         requiredElement.classList.add("blurrr");
       } else {
@@ -116,7 +116,7 @@ class Ninja extends React.Component {
       }
     } 
   }
-	
+    
   render() {
     const listItems = this.state.data.map((items, i) =>
         <button 
